@@ -1,0 +1,72 @@
+@page "/game"
+@using Frontend.Data
+<h1>The Game</h1>
+<div class="card">
+    <div class="card-header">Task:</div>
+    <div class="card-body">
+        @if(mathTask.question==null){
+            @GetQuestion().Result
+        }
+        else
+        {
+            @mathTask.question
+        }
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Solution:</span>
+            </div>
+            <input type="text" @bind="answer" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary" @onclick="CheckAnswer">Check answer</button>
+            </div>
+        <div class="card-footer">
+            @if (resMathTask.message == null)
+            {
+                <p>Status:</p>
+            }
+            else
+            {
+                <p>Status: @resMathTask.message</p>
+            }
+        </div>
+        <div class="card-footer">Score: @correctAnswers</div>
+    </div>
+</div>
+
+
+@code {
+    int correctAnswers;
+
+    BackendService server = new BackendService();
+    MathQuestion mathTask = new MathQuestion();
+    MathQuestion resMathTask = new MathQuestion();
+    private string answer = "";
+    async Task<String> GetQuestion()
+    {
+        Console.WriteLine("loading... new question");
+        mathTask = await server.GetQuestion();
+        return mathTask.question;
+        
+    }
+    
+
+    private async void CheckAnswer()
+    {
+        Console.WriteLine("submitting...");
+        resMathTask.message = "Checking...";
+        resMathTask = await server.PostAnswer(answer, mathTask.questionNumber);
+        if (resMathTask.message == "correct")
+        {
+            correctAnswers++;
+            
+        }
+
+
+    //workaround for updating component onchange
+        //https://github.com/dotnet/aspnetcore/issues/15616
+        base.StateHasChanged(); 
+    }
+
+
+}

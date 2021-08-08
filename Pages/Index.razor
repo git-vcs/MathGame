@@ -1,0 +1,12 @@
+@page "/"
+
+<h1>Server Status:</h1>
+<h5 class="card-body">@GetStatus().Result</h5>
+@using Frontend.Data
+@{
+    Task<String> GetStatus()
+    {
+        BackendService server = new BackendService();
+        return server.GetStatus();
+    }
+}
