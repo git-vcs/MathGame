@@ -1,4 +1,4 @@
-# Simple MatchGane made with Blazor
+# Simple MatchGame made with Blazor
 
 ### start:
 ```
