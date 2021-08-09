@@ -12,14 +12,16 @@
         {
             @mathTask.question
         }
+        
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">Solution:</span>
             </div>
             <input type="text" @bind="answer" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         </div>
-        <div class="card-footer">
+        <div class="card-footer mb-3">
             <button class="btn btn-primary" @onclick="CheckAnswer">Check answer</button>
+            <button class="btn btn-primary" @onclick="GetQuestion">Get new question</button>
             </div>
         <div class="card-footer">
             @if (resMathTask.message == null)
