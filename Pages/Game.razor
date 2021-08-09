@@ -1,5 +1,6 @@
 @page "/game"
 @using Frontend.Data
+@using System.Threading
 <h1>The Game</h1>
 <div class="card">
     <div class="card-header">Task:</div>
@@ -59,7 +60,8 @@
         if (resMathTask.message == "correct")
         {
             correctAnswers++;
-            
+            Thread.Sleep(2000);
+            await GetQuestion();
         }
 
 
